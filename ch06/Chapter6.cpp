@@ -49,4 +49,12 @@ void swap (const int *&a, const int *&b) {
 	b = tmp;
 }
 
+// Exercise 6.27
+int my_sum(const std::initializer_list<int>& ls) {
+	int sum = 0;
+	for(auto &n : ls) sum += n;
+	return sum;
+}
+
+
 		
