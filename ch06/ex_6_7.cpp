@@ -1,9 +1,4 @@
-#include <iostream>
-
-int counter() {
-	static int ctr = 0;
-	return ctr++;
-}
+#include "Chapter6.hpp"
 
 int main() {
 	for(int i = 0; i < 10; ++i) 

@@ -1,18 +1,8 @@
-#include <iostream>
+#include "Chapter6.hpp"
 
 using std::cout;
 using std::cin;
 using std::endl;
-
-int fact(int n) {
-	if(n == 1 || n == 0) return 1;
-	return n*fact(n-1);
-}
-
-template<typename T>
-T abs(T x) {
-	return std::abs(x);
-}
 
 int main() {
 	int n;

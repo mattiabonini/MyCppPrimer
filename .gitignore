@@ -1,7 +1,8 @@
 # All but sources files
 *
-!*.c*
-!*.h*
+!*.*
+!/*.*
+!/**/
 
 # Prerequisites
 *.d
