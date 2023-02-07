@@ -3,11 +3,27 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+//#include "Window_mgr.hpp"
+
+class Screen;
+
+class Window_mgr {
+	public:
+	using ScreenIndex = std::vector<Screen>::size_type;
+	
+	void clear(ScreenIndex i);
+	
+	private:
+	std::vector<Screen> screens; //{Screen(24, 80, ' ')};
+	
+};
 
 class Screen {
 	public:
 	typedef std::string::size_type pos;
-	//using std::string;
+	
+	friend void Window_mgr::clear(ScreenIndex i);
 	
 	mutable unsigned access_ctr = 0;
 	
@@ -55,6 +71,11 @@ inline const Screen& Screen::display(std::ostream& os) const {
 inline Screen& Screen::display (std::ostream& os){
 	do_display(os);
 	return *this;
+}
+
+void Window_mgr::clear(ScreenIndex i) {
+		Screen &s = screens[i];
+		s.contents = std::string(s.width*s.height, ' ');
 }
 
 #endif

@@ -16,12 +16,12 @@ class Sales_data {
 	
 	public:
 	// Constructors
-	Sales_data() = default;
-	/* equivalent to Sales_data() : bookNo(""), units_sold(0), revenue(0) {} */
-	Sales_data(std::string bookNo_) : bookNo(bookNo_) {}
 	Sales_data(std::string bookNo_, unsigned n, double p) :
 				bookNo(bookNo_), units_sold(n), revenue(p*n) {}
-	Sales_data(std::istream& is) { read(is, *this); }
+	Sales_data() : Sales_data("", 0, 0) {}
+	/* equivalent to Sales_data() : bookNo(""), units_sold(0), revenue(0) {} */
+	Sales_data(std::string bookNo_) : Sales_data(bookNo_, 0, 0) {}
+	Sales_data(std::istream& is) : Sales_data() { read(is, *this); }
 	
 	// Methods
 	std::string isbn() const {return bookNo; }
