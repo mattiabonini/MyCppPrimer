@@ -21,7 +21,7 @@ const std::string& StrBlob::back() const {
 }
 	
 
-void StrBlob::push_back(std::string &&s) {
+void StrBlob::push_back(std::string &s) {
 	data->push_back(s);
 }
 
@@ -30,7 +30,15 @@ void StrBlob::pop_back() {
 	return data->pop_back();
 }
 	
-void StrBlob::check(const size_type i, const std::string &msg) {
+void StrBlob::check(const size_type i, const std::string &msg) const {
 	if(i >= this->size())
-		throw out_of_range(msg);
+		throw std::out_of_range(msg);
+}
+
+StrBlobPtr StrBlob::begin() {
+	return StrBlobPtr(*this);
+}
+
+StrBlobPtr StrBlob::end() {
+	return StrBlobPtr(*this, this->size());
 }
