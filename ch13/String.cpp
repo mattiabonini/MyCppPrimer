@@ -27,6 +27,23 @@ String& String::operator=(const String &rhs) {
 	return *this;
 }
 
+String::String(String &&str) noexcept : elem(str.elem), first_free(str.first_free), cap(str.cap) {
+	std::cout << "Executing String(String &&)" << std::endl;
+	str.elem = str.first_free = str.cap = nullptr;
+}
+
+String& String::operator=(String &&rhs) noexcept {
+	std::cout << "Executing String& operator=(String &&)" << std::endl;
+	if(this != &rhs) {
+		free();
+		elem = rhs.elem;
+		first_free = rhs.first_free;
+		cap = rhs.cap;
+		rhs.elem = rhs.first_free = rhs.cap = nullptr;
+	}
+	return *this;
+}
+
 void String::free() {
 	while(first_free != elem)
 		alloc.destroy(first_free--);

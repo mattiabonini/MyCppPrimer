@@ -12,7 +12,9 @@ class String {
 	String() : elem(nullptr), first_free(nullptr), cap(nullptr) {}
 	String(const char*);
 	String(const String &);
+	String(String &&) noexcept;
 	String& operator=(const String &rhs);
+	String& operator=(String &&rhs) noexcept;
 	~String() {free(); }
 	
 	size_t size() const { return first_free - elem; }

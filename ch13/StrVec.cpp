@@ -1,7 +1,7 @@
 #include "StrVec.hpp"
 std::allocator<string> StrVec::alloc;
 
-StrVec::StrVec(std::initializer_list<string> &il) {
+StrVec::StrVec(std::initializer_list<string> il) {
 	elements_ = alloc.allocate(il.size());
 	first_free_ = std::uninitialized_copy(il.begin(), il.end(), elements_);
 	capacity_ = first_free_;
@@ -19,6 +19,21 @@ StrVec& StrVec::operator=(const StrVec &rhs) {
 	elements_ = newdata.first;
 	first_free_ = newdata.second;
 	capacity_ = newdata.second;
+	return *this;
+}
+
+StrVec::StrVec(StrVec &&svec) noexcept : elements_(svec.elements_), first_free_(svec.first_free_), capacity_(svec.capacity_) {
+	svec.elements_ = svec.first_free_ = svec.capacity_ = nullptr;
+}
+
+StrVec& StrVec::operator=(StrVec &&rhs) noexcept{
+	if(this != &rhs) {
+		free();
+		elements_ = rhs.elements_;
+		first_free_ = rhs.first_free_;
+		capacity_ = rhs.capacity_;
+		rhs.elements_ = rhs.first_free_ = rhs.capacity_ = nullptr;
+	}
 	return *this;
 }
 	

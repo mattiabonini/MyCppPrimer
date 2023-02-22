@@ -28,15 +28,32 @@ class Message {
 	
 	public:
 	Message(string contents_ = "") : contents(contents_) {}
-	Message(Message &m) : contents(m.contents), folders(m.folders) {
+	Message(const Message &m) : contents(m.contents), folders(m.folders) {
 		add_to_folders(*this);
 	}
+	Message(Message &&m) : contents(std::move(m.contents)), folders(std::move(m.folders)) {
+		add_to_folders(this);
+		remove_from_folders(&rhs);
+		rhs.folders.clear();
+	}
 	
-	Message& operator=(Message &rhs) {
+	Message& operator=(const Message &rhs) {
 		remove_from_folders(*this);
 		contents = rhs.contents;
 		folders = rhs.folders;
 		add_to_folders(*this);
+		return *this;
+	}
+	
+	Message& operator=(Message &&rhs) {
+		if(*this != rhs) {
+			remove_from_folders(this);
+			contents = std::move(rhs.contents);
+			folders = std::move(rhs.folders);
+			remove_from_folders(&rhs);
+			add_to_folders(this);
+			rhs.folders.clear();
+		}
 		return *this;
 	}
 	

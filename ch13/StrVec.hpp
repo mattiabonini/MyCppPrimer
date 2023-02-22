@@ -15,9 +15,11 @@ class StrVec{
 	public:
 	// Construction and copy control
 	StrVec() : elements_(nullptr), first_free_(nullptr), capacity_(nullptr) {}
-	StrVec(std::initializer_list<string> &il);
+	StrVec(std::initializer_list<string> il);
 	StrVec(const StrVec &svec);
+	StrVec(StrVec &&) noexcept;
 	StrVec& operator=(const StrVec &rhs);
+	StrVec& operator=(StrVec &&rhs) noexcept;
 	~StrVec() { free(); }
 	
 	//
