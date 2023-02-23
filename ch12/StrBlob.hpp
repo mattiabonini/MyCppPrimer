@@ -19,6 +19,10 @@ class StrBlob {
 	StrBlob() : data(std::make_shared<std::vector<std::string>>()) {}
 	StrBlob(std::initializer_list<std::string> il) : data(std::make_shared<std::vector<std::string>>(il)) {}
 	
+	// Operators
+	std::string& operator[](size_type i) { return (*data)[i]; }
+	const std::string& operator[](size_type i) const  { return (*data)[i]; }
+	
 	size_type size() const {return data->size(); }
 	bool empty() const {return data->empty(); }
 	

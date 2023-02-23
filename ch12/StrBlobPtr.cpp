@@ -20,3 +20,51 @@ StrBlobPtr::check(std::size_t i, const std::string &msg) const {
 	if(i >= sp->size()) throw std::out_of_range(msg);
 	return sp;
 }
+
+StrBlobPtr& StrBlobPtr::operator++() {
+	check(curr, "Out of bound increment");
+	++curr;
+	return *this;
+}
+
+StrBlobPtr& StrBlobPtr::operator--() {
+	--curr;
+	check(curr, "Out of bound decrement");
+	return *this;
+}
+
+StrBlobPtr operator++(int) {
+	StrBlobPtr ret(*this);
+	++*this;
+	return ret;
+}
+
+StrBlobPtr operator--(int) {
+	StrBlobPtr ret(*this);
+	--*this;
+	return ret;
+}
+
+std::string& operator*() const {
+	auto p = check(curr, "Dereference past end");
+	return (*p)[curr];
+}
+	
+	
+std::string* operator->() const {
+	return & this->operator*();
+}
+
+StrBlobPtr operator+(const StrBlobPtr& op, size_t i) {
+	StrBlobPtr ret(op);
+	ret.curr += i;
+	check(ret.curr, "Out of bound index addition");
+	return ret;
+}
+
+StrBlobPtr operator-(const StrBlobPtr& op, size_t i) {
+	StrBlobPtr ret(op);
+	ret.curr -= i;
+	check(ret.curr, "Out of bound index subtraction");
+	return ret;
+}

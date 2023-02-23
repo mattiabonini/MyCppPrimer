@@ -1,7 +1,7 @@
 #include "StrVec.hpp"
 std::allocator<string> StrVec::alloc;
 
-StrVec::StrVec(std::initializer_list<string> il) {
+StrVec::StrVec(std::initializer_list<std::string> il) {
 	elements_ = alloc.allocate(il.size());
 	first_free_ = std::uninitialized_copy(il.begin(), il.end(), elements_);
 	capacity_ = first_free_;
@@ -36,6 +36,16 @@ StrVec& StrVec::operator=(StrVec &&rhs) noexcept{
 	}
 	return *this;
 }
+
+StrVec& StrVec::operator=(std::initializer_list<std::string> il) {
+	free();
+	elements_ = alloc.allocate(il.size());
+	first_free_ = elements_;
+	for(auto i = 0; i != il.size(); ++i)
+		alloc.construct(first_free_++, il[i]);
+	capacity_ = first_free_;
+	return *this;
+} 
 	
 void StrVec::reserve(size_t n) {
 	if(capacity() < n) {

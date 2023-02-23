@@ -59,3 +59,33 @@ void String::print() const {
 	for(auto p = elem; p != first_free; ++p)
 		std::cout << *p;
 }
+
+std::ostream& operator<<(std::ostream &os, const String &s) {
+	for(auto p = s.elem; p != s.first_free; ++p) os << *p;
+	return os;
+}
+
+bool operator==(String &lhs, String &rhs) {
+	if(lhs.size() != rhs.size()) return false;
+	for(auto p = lhs.begin(), q = rhs.begin(); p != lhs.end(); ++p, ++q)
+		if(*p != *q) return false;
+	return true;
+}
+
+bool operator!=(String &lhs, String &rhs) {
+	return !(lhs == rhs);
+}
+
+bool operator<(String &lhs, String &rhs) {
+	auto n = (lhs.size() < rhs.size()) ? lhs.size() : rhs.size();
+	for(auto i = 0; i < n; ++i)
+		if(*(lhs.elem + i) < *(rhs.elem + i)) return true;	
+		else if(*(lhs.elem + i) > *(rhs.elem + i)) return false;
+	return (lhs.size() < rhs.size()) ? true : false;
+}
+
+	
+	
+	
+	
+	

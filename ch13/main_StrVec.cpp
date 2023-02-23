@@ -6,7 +6,7 @@ using std::string;
 
 int main() {
 	String s("abc"), s2("def"), s3("ghi"), s4("jkl");
-	std::string ssss("abc"), aaa("ciao");
+	std::string ssss = "abc", aaa("ciao");
 	StrVec v1;
 	
 	std::vector<String> vec;
@@ -29,9 +29,9 @@ int main() {
 	s2 += "ciao";
 	std::cout << std::endl << s2 << std::endl;*/
 	
-	/*
-	std::initializer_list<std::string> il(ssss); //, aaa); //?!?!?
-	StrVec v2(il);
-*/
+	
+	std::initializer_list<std::string> il{ssss, aaa}; //?!?!?
+	StrVec v2({ssss, aaa});
+
 	return 0;
 }
