@@ -46,9 +46,12 @@ class Disc_quote : public Quote {
 
 class Bulk_quote : public Disc_quote {
 	public:
+	/*
 	Bulk_quote() = default;
 	Bulk_quote(const std::string &id, double sales_price, size_t qty, double dis) :
 		Disc_quote(id, sales_price, qty, dis) {}
+	*/
+	using Disc_quote::Disc_quote;
 	
 	double net_price(size_t n) const override { 
 		if(n >= min_qty)
