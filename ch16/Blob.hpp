@@ -21,6 +21,7 @@ template<typename T> class Blob {
 	
 	Blob() : data(std::make_shared<T>()) {}
 	Blob(std::initializer_list<T> il) : data(std::make_shared<std::vector<T>>(il)) {}
+	template <typename It> Blob(It b, It e) : data(std::make_shared<std::vector<T>>(b,e)) {}
 	Blob(const Blob &b) : data(b.data) {}
 	~Blob() = default;
 	
