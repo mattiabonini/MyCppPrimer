@@ -1,4 +1,5 @@
 #include "my_pointers.hpp"
+#include <vector>
 
 template <typename T>
 void my_deleter(T *p) {
@@ -11,6 +12,7 @@ int main() {
 	my_shared_ptr<double> d(new double(2.0));
 	my_shared_ptr<double> e(new double(10.0));
 	my_shared_ptr<long> f(new long(7), my_deleter<long>);
+	my_shared_ptr<std::vector<int>> v = make_shared<std::vector<int>>(10, 5);
 	
 	{
 		my_shared_ptr<double> d2(d);
@@ -26,5 +28,9 @@ int main() {
 	my_unique_ptr<int> un(new int(5));
 	*un = 7;
 	std::cout << *un << std::endl;
+	
+	std::cout << "MAKE SHARED TEST" << std::endl;
+	for(const auto &p : *v) std::cout << p << " ";
+	std::cout << std::endl;
 	return 0;
 }

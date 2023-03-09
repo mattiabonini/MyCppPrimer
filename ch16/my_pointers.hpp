@@ -4,9 +4,14 @@
 #include <iostream>
 #include <functional>
 
+// Forward declarations
+template <typename T> class my_shared_ptr;
+template <typename T, typename... Args> my_shared_ptr<T> make_shared(Args&&... args);
+
 template <typename T>
 class my_shared_ptr {
 	using DeleterType = void(*)(T*);
+	template <typename... Args> friend my_shared_ptr<T> make_shared(Args&&... args);
 	public:
 	my_shared_ptr(T *p = nullptr, DeleterType del = nullptr) : data(p), counter(new size_t(data != nullptr)), d(del) { 
 		std::cout << "Constructor - Counter is: " << *counter << std::endl;
@@ -80,6 +85,11 @@ inline my_shared_ptr<T>::~my_shared_ptr() {
 	}
 	data = nullptr;
 	d = nullptr;
+}
+
+template<typename T, typename... Args>
+my_shared_ptr<T> make_shared(Args&&... args) {
+	return my_shared_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
 #endif
